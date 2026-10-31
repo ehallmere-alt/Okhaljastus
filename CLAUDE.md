@@ -15,7 +15,12 @@ The **new** O.K Haljastus site exists only on the hosting for now; the owner wil
 
 When the new files arrive:
 - Make sure no secrets got committed (`config.php` with DB passwords, `.env`, `wp-config.php`, lead/data JSON). If any did, remove them from the repo and tell the owner to change those passwords.
-- Find out what it is built on (plain HTML/PHP or WordPress) and rewrite this file: structure, commands, deploy.
+- The new site is **plain PHP/HTML with its own custom admin panel** (not WordPress, owner confirmed). Probably built
+  like crestudio.ee (content in JSON under `data/`, admin with password hash). Read it and rewrite this file: structure, commands, deploy.
+- **The GitHub repo is public.** Admin password hashes, leads, client data and any `data/*.json` written by the admin
+  must be gitignored and never committed (same rule as crestudio.ee). If they were uploaded, delete them from the repo
+  and tell the owner to change the admin password.
+- Production data on the hosting is newer than git: never tell the owner to upload `data/` back over it.
 - The owner wants: big `tel:` call buttons (calls are the main lead channel) and a working quote form.
   A tested implementation (send.php with honeypot, rate limit, leads saved to `data/leads.json`, `data/.htaccess` deny)
   is in git history: commit `0913318`. Reuse it if the new site has no working form.
