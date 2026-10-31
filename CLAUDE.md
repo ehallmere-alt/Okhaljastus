@@ -14,8 +14,16 @@ Only `index.html` exists. It links to `style.css`, `script.js` and `logo.png`, w
 (`scrollToForm()` is called but not defined). Gallery photos are Unsplash placeholders. The quote form
 (name + phone) has no backend: it sends nothing.
 
-Ask the owner before choosing how the form should deliver leads (mailto, a PHP `send.php` like on
-crestudio.ee, or a form service), and for the real logo and photos.
+Form delivery is **not decided yet**. Recommended option (proposed to the owner): a PHP `send.php` modelled on
+crestudio.ee's (save each lead to a file + `mail()`, honeypot, rate limit), plus a big `tel:` button,
+because phone calls are the main channel. If the hosting has no PHP, fall back to a form service (e.g. Formspree).
+Confirm with the owner before building it. Real logo and photos are still needed from the owner.
+
+## Deploy
+
+No CI/CD. The owner uploads files by hand: from the phone with **Termux**, or from the PC with **FileZilla**.
+When work is done, list exactly which files changed so the owner knows what to upload.
+If a lead file is added later (e.g. `data/leads.json`), it must not be in git and must never be overwritten on upload.
 
 ## Commands
 
