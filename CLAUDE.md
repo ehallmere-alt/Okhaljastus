@@ -10,16 +10,15 @@ Phone `+372 565 1074`, address `Oja tee 10, Tiskre küla`. Site language: **Esto
 
 ## Current state
 
-One-page site: `index.html`, `style.css`, `script.js`, `send.php`.
+**The old site was removed on purpose** (owner's decision, 2026-10-31). It stays in git history only.
+The **new** O.K Haljastus site exists only on the hosting for now; the owner will download it over FTP and add it here.
 
-- Big `tel:` buttons (hero, header, floating "Helista" on mobile): calls are the main lead channel.
-- Quote form (name, phone, optional message) posts via `fetch` to `send.php`: honeypot field `website`,
-  rate limit 5 / 10 min per IP, each lead saved to `data/leads.json` (newest first, max 1000).
-- `LEAD_EMAIL` at the top of `send.php` is **empty**: leads are only saved to the file until the owner gives an email.
-  The owner reads leads by downloading `data/leads.json` over FTP. No admin panel yet (build one only if asked).
-- `data/.htaccess` blocks web access to `data/`. `data/*.json` is gitignored.
-- Still placeholders: text logo instead of `logo.png` (commented `<img>` is ready in `index.html`), Unsplash gallery
-  photos (the sandbox can't load Unsplash, so they look empty in local screenshots; that's expected).
+When the new files arrive:
+- Make sure no secrets got committed (`config.php` with DB passwords, `.env`, `wp-config.php`, lead/data JSON). If any did, remove them from the repo and tell the owner to change those passwords.
+- Find out what it is built on (plain HTML/PHP or WordPress) and rewrite this file: structure, commands, deploy.
+- The owner wants: big `tel:` call buttons (calls are the main lead channel) and a working quote form.
+  A tested implementation (send.php with honeypot, rate limit, leads saved to `data/leads.json`, `data/.htaccess` deny)
+  is in git history: commit `0913318`. Reuse it if the new site has no working form.
 - Hosting: same provider as crestudio.ee (PHP available) but a **separate FTP account**.
 
 ## Commands
