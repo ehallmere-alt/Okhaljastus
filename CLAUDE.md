@@ -10,6 +10,8 @@ Phone `+372 565 1074`, address `Oja tee 10, Tiskre küla`. Site language: **Esto
 
 ## Current state
 
+**ON HOLD (owner, 2026-10-31): don't work on this repo until the owner brings it up again.**
+
 **The old site was removed on purpose** (owner's decision, 2026-10-31). It stays in git history only.
 The **new** O.K Haljastus site exists only on the hosting for now; the owner will download it over FTP and add it here.
 
