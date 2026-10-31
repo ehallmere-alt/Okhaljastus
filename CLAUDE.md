@@ -44,8 +44,7 @@ rm -f data/*.json                  # remove test leads afterwards
 ```
 
 No test suite. "Tested" = page and assets return 200 and it looks right on mobile and desktop
-(Chromium + Playwright are preinstalled for screenshots). The generic `.claude/rules/` TDD / 80% coverage /
-TypeScript rules do not apply here.
+(Chromium + Playwright are preinstalled for screenshots).
 
 ## Code style
 
