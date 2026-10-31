@@ -10,32 +10,31 @@ Phone `+372 565 1074`, address `Oja tee 10, Tiskre küla`. Site language: **Esto
 
 ## Current state
 
-Only `index.html` exists. It links to `style.css`, `script.js` and `logo.png`, which are **not in the repo yet**
-(`scrollToForm()` is called but not defined). Gallery photos are Unsplash placeholders. The quote form
-(name + phone) has no backend: it sends nothing.
+One-page site: `index.html`, `style.css`, `script.js`, `send.php`.
 
-Form delivery is **not decided yet**. Recommended option (proposed to the owner): a PHP `send.php` modelled on
-crestudio.ee's (save each lead to a file + `mail()`, honeypot, rate limit), plus a big `tel:` button,
-because phone calls are the main channel. If the hosting has no PHP, fall back to a form service (e.g. Formspree).
-Confirm with the owner before building it. Real logo and photos are still needed from the owner.
-
-## Deploy
-
-No CI/CD. The owner uploads files by hand: from the phone with **Termux**, or from the PC with **FileZilla**.
-When work is done, list exactly which files changed so the owner knows what to upload.
-If a lead file is added later (e.g. `data/leads.json`), it must not be in git and must never be overwritten on upload.
+- Big `tel:` buttons (hero, header, floating "Helista" on mobile): calls are the main lead channel.
+- Quote form (name, phone, optional message) posts via `fetch` to `send.php`: honeypot field `website`,
+  rate limit 5 / 10 min per IP, each lead saved to `data/leads.json` (newest first, max 1000).
+- `LEAD_EMAIL` at the top of `send.php` is **empty**: leads are only saved to the file until the owner gives an email.
+  The owner reads leads by downloading `data/leads.json` over FTP. No admin panel yet (build one only if asked).
+- `data/.htaccess` blocks web access to `data/`. `data/*.json` is gitignored.
+- Still placeholders: text logo instead of `logo.png` (commented `<img>` is ready in `index.html`), Unsplash gallery
+  photos (the sandbox can't load Unsplash, so they look empty in local screenshots; that's expected).
+- Hosting: same provider as crestudio.ee (PHP available) but a **separate FTP account**.
 
 ## Commands
 
 No build step, no dependencies. Plain HTML/CSS/JS.
 
 ```bash
-# Local preview
-python3 -m http.server 8098        # then open http://127.0.0.1:8098/
+# Local preview (PHP needed for the form)
+php -S 127.0.0.1:8098              # then open http://127.0.0.1:8098/
 
-# Check: page loads and linked files exist
-curl -s -o /dev/null -w "%{http_code}\n" 127.0.0.1:8098/
-for f in style.css script.js logo.png; do curl -s -o /dev/null -w "%{http_code} $f\n" "127.0.0.1:8098/$f"; done
+# Checks
+php -l send.php
+for f in / style.css script.js; do curl -s -o /dev/null -w "%{http_code} $f\n" "127.0.0.1:8098/$f"; done
+curl -s -d "name=Test&phone=55555555" 127.0.0.1:8098/send.php   # {"ok":true}
+rm -f data/*.json                  # remove test leads afterwards
 ```
 
 No test suite. "Tested" = page and assets return 200 and it looks right on mobile and desktop
